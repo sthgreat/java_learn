@@ -1,0 +1,77 @@
+package java_learn;
+
+import java.util.ArrayList;
+
+public class Test{
+	public static void main(String[] args) {
+		shopcart cart = new shopcart();
+		cart.add(new food("面条", 2.19));
+		cart.add(new food("面包", 11.09));
+		cart.add(new toy("四驱车", 29.9));
+		System.out.println("一共需要支付:" + cart.get_total_price() + "元");
+	}
+}
+
+interface good{  //商品的标准
+	public String getName();
+	public double getPrice();
+}
+
+class food implements good{
+	private String name;
+	private double price;
+
+	public food(String name, double price) {
+		this.name = name;
+		this.price = price;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	public double getPrice() {
+		return this.price;
+	}
+	
+	public String toString() {
+		return("【食物】，" + "名称是：" + this.name + "，价格是:" + this.price);
+	}
+}
+
+class toy implements good{
+	private String name;
+	private double price;
+
+	public toy(String name, double price) {
+		this.name = name;
+		this.price = price;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	public double getPrice() {
+		return this.price;
+	}
+	
+	public String toString() {
+		return("【玩具】，" + "名称是：" + this.name + "，价格是:" + this.price);
+	}
+}
+
+class shopcart{
+	ArrayList<good> goodlist = new ArrayList<good>();
+	public void add(good g) {
+		goodlist.add(g);
+	}
+	
+	public double get_total_price() {
+		Object[] obj = goodlist.toArray();
+		double total_price = 0;
+		for(Object g : obj) {
+			good god = (good) g;
+			total_price += god.getPrice();
+		}
+		return total_price;
+	}
+}
