@@ -57,7 +57,4 @@ class Employee{
 	}
 
 	public void tell() {
-		System.out.println("名字是：" + name + ", 薪水是" + Salary + ", 年龄是是" + age);
-	}
-}
-
+		System.out.println("名字
