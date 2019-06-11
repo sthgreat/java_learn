@@ -8,7 +8,8 @@ public class Test{
 		cart.add(new food("面条", 2.19));
 		cart.add(new food("面包", 11.09));
 		cart.add(new toy("四驱车", 29.9));
-		System.out.println("一共需要支付:" + cart.get_total_price() + "元");
+		Cashier cashier = new Cashier(cart);
+		System.out.println("一共需要支付:" + cashier.allPrice() + "元，" + "共有" + cashier.allcount() + "件商品。");
 	}
 }
 
@@ -33,6 +34,20 @@ class food implements good{
 		return this.price;
 	}
 	
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(obj == this) {
+			return true;
+		}
+		if(!(obj instanceof food)) {
+			return false;
+		}
+		food f = (food) obj;
+		return f.getName()==this.name && f.getPrice() == this.price;
+	}
+	
 	public String toString() {
 		return("【食物】，" + "名称是：" + this.name + "，价格是:" + this.price);
 	}
@@ -54,6 +69,20 @@ class toy implements good{
 		return this.price;
 	}
 	
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(obj == this) {
+			return true;
+		}
+		if(!(obj instanceof food)) {
+			return false;
+		}
+		toy f = (toy) obj;
+		return f.getName()==this.name && f.getPrice() == this.price;
+	}
+	
 	public String toString() {
 		return("【玩具】，" + "名称是：" + this.name + "，价格是:" + this.price);
 	}
@@ -65,13 +94,33 @@ class shopcart{
 		goodlist.add(g);
 	}
 	
-	public double get_total_price() {
-		Object[] obj = goodlist.toArray();
-		double total_price = 0;
-		for(Object g : obj) {
-			good god = (good) g;
-			total_price += god.getPrice();
+	public void delete(good g) {
+		this.goodlist.remove(g);
+	}
+	
+	public Object[] getAll() {
+		return goodlist.toArray();
+	}
+}
+
+class Cashier{
+	private shopcart shopcar;
+	
+	public Cashier(shopcart shopcar) {
+		this.shopcar = shopcar;
+	}
+	
+	public double allPrice() {
+		double total_price = 0.0;
+		Object[] result = this.shopcar.getAll();
+		for(Object obj : result) {
+			good g = (good) obj;
+			total_price += g.getPrice();
 		}
 		return total_price;
+	}
+	
+	public int allcount() { //商品数量
+		return this.shopcar.getAll().length;
 	}
 }
