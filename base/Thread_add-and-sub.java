@@ -1,5 +1,5 @@
-,package java_learn;
-
+package java_learn;
+//设计4个线程对象，两个执行加操作，两个执行减操作
 
 public class Test{
 	public static void main(String[] args) {
