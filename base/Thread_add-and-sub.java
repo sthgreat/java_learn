@@ -1,4 +1,5 @@
 package java_learn;
+//多线程中的flag如果不加this修饰会出现错误
 //设计4个线程对象，两个执行加操作，两个执行减操作
 
 public class Test{
