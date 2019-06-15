@@ -1,5 +1,5 @@
 package java_learn;
-
+//未完成删除功能，需要
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,7 +11,9 @@ public class Test{
 		tree.add(new Person(80,"ooo"));
 		tree.add(new Person(30,"ppp"));
 		tree.add(new Person(100,"lll"));
-		System.out.println(Arrays.toString(tree.toArray()));
+		//System.out.println(Arrays.toString(tree.toArray()));
+		Person a = new Person(100,"lll");
+		System.out.println(tree.contain(a));
 	}
 }
 /**
@@ -60,6 +62,41 @@ class BinaryTree<T extends Comparable<T>> {
 				this.right.toArrayNode();
 			}
 		}
+		
+		public boolean containNode(Comparable<T> data) {
+			if(data.compareTo((T)this.data)==0) {
+				return true;
+			}else if(data.compareTo((T) this.data)<0) {//左边有数据
+				if(this.left!=null) {
+					return this.left.containNode(data);
+				}else {
+					return false;
+				}
+			}else {
+				if(this.right!=null) {
+					return this.right.containNode(data);
+				}else {
+					return false;
+				}
+			}
+		}
+		public Node getRemoveNode(Comparable<T> data) {
+			if(data.compareTo((T)this.data)==0) {
+				return this;
+			}else if(data.compareTo((T) this.data)<0) {//左边有数据
+				if(this.left!=null) {
+					return this.left.getRemoveNode(data);
+				}else {
+					return null;
+				}
+			}else {
+				if(this.right!=null) {
+					return this.right.getRemoveNode(data);
+				}else {
+					return null;
+				}
+			}
+		}
 	}
 	//----------------以下为二叉树功能实现-----------------
 	private Node root;
@@ -97,6 +134,24 @@ class BinaryTree<T extends Comparable<T>> {
 			return Returndata;
 		}
 	}
+	
+	public boolean contain(Comparable<T> data) {
+		if(count == 0) {
+			return false;
+		}else {
+			return this.root.containNode(data);
+		}
+	}
+	public void remove(Comparable<T> data) {
+		if(this.root == null) {
+			return;
+		}else {
+			if(this.root.data.compareTo((T)data)==0) { //删除根节点
+				
+			}
+		}
+	}
+	
 }
 	
 class Person implements Comparable<Person>{
