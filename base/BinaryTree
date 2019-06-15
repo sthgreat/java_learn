@@ -1,0 +1,131 @@
+package java_learn;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Test{
+	public static void main(String[] args) throws Exception {
+		BinaryTree tree = new BinaryTree();
+		tree.add(new Person(50,"iii"));
+		tree.add(new Person(80,"ooo"));
+		tree.add(new Person(30,"ppp"));
+		tree.add(new Person(100,"lll"));
+		System.out.println(Arrays.toString(tree.toArray()));
+	}
+}
+/**
+ * 实现二叉树
+ * @author jsb
+ *
+ * @param <T>
+ */
+class BinaryTree<T extends Comparable<T>> {
+	private class Node{
+		private Comparable<T> data;
+		private Node parent; //父节点
+		private Node left; //左子树
+		private Node right; //右子树
+		
+		public Node(Comparable<T> data) {
+			this.data = data;
+		}
+		
+		public void addNode(Node newnode) {
+			if(newnode.data.compareTo((T) this.data)<=0) {
+				if(this.left == null) {
+					this.left = newnode;
+					newnode.parent = this;
+				}else {
+					this.left.addNode(newnode);
+				}
+			}else {
+				if(this.right == null) {
+					this.right = newnode;
+					newnode.parent = this;
+				}else {
+					this.right.addNode(newnode);
+				}
+			}
+		}
+		/**
+		 * 实现数据获取处理，中序遍历
+		 */
+		public void toArrayNode() {
+			if(this.left!=null) {
+				this.left.toArrayNode();
+			}
+			BinaryTree.this.Returndata[BinaryTree.this.foot++] = this.data;
+			if(this.right!=null) {
+				this.right.toArrayNode();
+			}
+		}
+	}
+	//----------------以下为二叉树功能实现-----------------
+	private Node root;
+	private int count = 0;
+	private Object[] Returndata;
+	private int foot; //控制脚标
+	/**
+	 * 数据保存操作
+	 * @param data
+	 */
+	public void add(Comparable<T> data) {
+		if(data==null) {
+			throw new NullPointerException("保存数据不能为空");
+		}
+		//所有数据本身不具有节点关系的匹配，需要包装在节点中
+		Node newnode = new Node(data);
+		if(this.root==null) {
+			this.root = newnode;
+		}else {
+			this.root.addNode(newnode);
+		}
+		this.count++;
+	}
+	/**
+	 * 将数据予以返回
+	 * @param obj
+	 */
+	public Object[] toArray() {
+		if(count == 0) {
+			return null;
+		}else {
+			this.Returndata = new Object[this.count];//实例化返回对象
+			this.foot = 0;//脚标清零
+			this.root.toArrayNode();//Node类负责
+			return Returndata;
+		}
+	}
+}
+	
+class Person implements Comparable<Person>{
+	private int age;
+	private String name;
+	public Person(int age, String name) {
+		this.age = age;
+		this.name = name;
+	}
+	public String toString() {
+		return "对象名称：" + name + "，年龄：" + age +"\n";
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	@Override
+	public int compareTo(Person per) {
+		// TODO Auto-generated method stub
+		return this.age - per.age;
+	}
+	
+}
