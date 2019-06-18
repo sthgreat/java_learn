@@ -1,0 +1,66 @@
+package java_learn;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class Test{
+	public static void main(String[] args) throws Exception {
+		if(args.length != 2) {
+			System.out.println("文件输入结构错误，执行结构：Java Test 拷贝文件源路径 拷贝文件目标路径");
+			System.exit(1);
+		}
+		FileUtil fu = new FileUtil(args[0], args[1]);
+		long start = System.currentTimeMillis();
+		System.out.println(fu.copy() ? "文件拷贝成功！" : "文件拷贝失败！");
+		long end = System.currentTimeMillis();
+		System.out.println("拷贝时间：" + (end - start));
+	}
+}
+
+class FileUtil{  //文件操作类
+	private File srcFile;  //源文件路径
+	private File targetFile;  //目标文件路径
+	FileUtil(String arg1, String arg2){
+		this(new File(arg1), new File(arg2));
+	}
+	public FileUtil(File srcFile, File targetFile) {
+		super();
+		this.srcFile = srcFile;
+		this.targetFile = targetFile;
+	}
+	public boolean copy() throws Exception {
+		if(!this.srcFile.exists()) {
+			System.out.println("原文件不存在");
+			return false;
+		}
+		if(!this.srcFile.getParentFile().exists()) {
+			this.srcFile.getParentFile().mkdirs();
+		}
+		byte[] data = new byte[1024];
+		InputStream is = null;
+		OutputStream os = null;
+		
+		try { //
+			is = new FileInputStream(this.srcFile);
+			os = new FileOutputStream(this.targetFile);
+			int len = 0;
+			while((len = is.read(data))!=-1) {
+				os.write(data,0,len);
+			}
+			return true;
+		}catch(Exception e){
+			throw e;
+		}finally {
+			if(is!=null) {
+				is.close();
+			}
+			if(os!=null) {
+				os.close();
+			}
+		}
+	}
+}
