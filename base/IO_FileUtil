@@ -32,21 +32,15 @@ class FileUtil{  //文件操作类
 		this.srcFile = srcFile;
 		this.targetFile = targetFile;
 	}
-	public boolean copy() throws Exception {
-		if(!this.srcFile.exists()) {
-			System.out.println("原文件不存在");
-			return false;
-		}
-		if(!this.srcFile.getParentFile().exists()) {
-			this.srcFile.getParentFile().mkdirs();
-		}
+	
+	public boolean copyFile(File srcFile, File targetFile) throws Exception {
 		byte[] data = new byte[1024];
 		InputStream is = null;
 		OutputStream os = null;
 		
 		try { //
-			is = new FileInputStream(this.srcFile);
-			os = new FileOutputStream(this.targetFile);
+			is = new FileInputStream(srcFile);
+			os = new FileOutputStream(targetFile);
 			int len = 0;
 			while((len = is.read(data))!=-1) {
 				os.write(data,0,len);
@@ -61,6 +55,44 @@ class FileUtil{  //文件操作类
 			if(os!=null) {
 				os.close();
 			}
+		}
+	}
+	
+	public boolean copyDir(File srcFile, File targetFile) throws Exception {
+		if(!targetFile.exists()) {
+			targetFile.mkdir();
+		}
+		copyImpl(this.srcFile);
+		return false;
+	}
+	
+	public void copyImpl(File file) throws Exception {
+		if(file.isDirectory()) {
+			File[] results = file.listFiles();
+			for(int x = 0;x<results.length;x++) {
+				copyImpl(results[x]);
+			}
+		}else {
+			File t_file = new File(this.targetFile.getPath() + file.separator + file.getPath().replace(this.srcFile + file.separator, ""));
+			this.copyFile(file, t_file);
+		}
+	}
+	
+	public boolean copy() throws Exception {
+		if(!this.srcFile.exists()) {
+			System.out.println("源文件不存在");
+			return false;
+		}
+		if(!this.srcFile.getParentFile().exists()) {
+			this.srcFile.getParentFile().mkdirs();
+		}
+		
+		if(this.srcFile.isFile()) {
+			copyFile(this.srcFile, this.targetFile);
+			return true;
+		}else {
+			copyDir(this.srcFile, this.targetFile);
+			return true;
 		}
 	}
 }
