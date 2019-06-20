@@ -1,0 +1,26 @@
+package java_learn;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class Test{
+	public static void main(String[] args) throws Exception {
+		//加载驱动类（根据提示不需要手动加载类，且com.mysql.jdbc.Driver类已经弃用，现为com.mysql.cj.jdbc.Driver类）
+		//Class.forName("com.mysql.jdbc.Driver");
+		//建立连接（内部包含socket对象，比较耗时），真正开发中使用连接池进行操作。
+		long start = System.currentTimeMillis();
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "jsbbsj");
+		System.out.println(con);
+		long end = System.currentTimeMillis();
+		System.out.println("耗时：" + (end - start) + "ms");
+		
+		String sql = "insert into t_user (id,username,pwd) values (?,?,?)"; //?为占位符，预处理机制防御sql注入
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setObject(1, 2);//使用setObject方法设置元素
+		st.setObject(2, "jsb");//索引从1开始
+		st.setObject(3, "kkl");
+		st.execute();
+		
+	}
+}
