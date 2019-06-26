@@ -1,0 +1,27 @@
+package learn.sql;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class jdbcUtils {
+	private static Properties pro;
+	static {
+  //静态方法加载，省
+		InputStream in = jdbcUtils.class.getClassLoader().getResourceAsStream("db.properties");
+		Properties pro = new Properties();
+		try {
+			pro.load(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static Connection getConnection() throws SQLException, IOException {
+		
+		return DriverManager.getConnection(pro.getProperty("url"),pro.getProperty("username"),pro.getProperty("password"));
+	}
+}
