@@ -3,8 +3,8 @@
     <default-config>
         <property name="jdbcUrl">jdbc:mysql://localhost:3306/test</property>
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="user">root</property>
-        <property name="password">jsbbsj</property>
+        <property name="user">xxx</property>
+        <property name="password">xxx</property>
         <property name="acquireIncrement">3</property>
         <property name="initialPoolSize">10</property>
         <property name="minPoolSize">2</property>
