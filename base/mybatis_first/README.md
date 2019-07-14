@@ -1,5 +1,5 @@
-mybatis初体验
-流程：
+mybatis初体验<br>
+流程：<br>
 1.创建POJO类<br>
 2.使用配置文件生成sqlsessionfactory（单例模式），以后的每次回话使用sqlsessionfactory创建一个数据库连接（其中sqlsessionfactory相当于一个连接池）<br>
 3.创建映射器，映射器由两部分构成：其一是配置文件xml，用来存放sql语句；另一部分是映射器接口（java接口），用来定义函数和传入参数类型。<br>
