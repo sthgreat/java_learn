@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <aop:aspectj-autoproxy />
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value="jsbbsj"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:cn/dzkjdx/spring_mybatis/sqlMapConfig.xml"/>
+    </bean>
+
+<!--    <bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+<!--        <property name="mapperInterface" value="cn.dzkjdx.spring_mybatis.RoleMapper"/>-->
+<!--        <property name="SqlSessionFactory" ref="sqlSessionFactory"/>-->
+<!--&lt;!&ndash;        sqlSessionTemplate优先级高于sqlSessionFactory&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>&ndash;&gt;-->
+<!--    </bean>-->
+
+<!--    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">-->
+<!--        <constructor-arg ref="sqlSessionFactory"/>-->
+<!--    </bean>-->
+
+<!--使用MapperScannerConfigurer自动扫描mapper进行配置，无需针对单一mapper一个个进行配置-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.dzkjdx.spring_mybatis"/>
+        <property name="SqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+    </bean>
+</beans>
