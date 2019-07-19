@@ -1,0 +1,57 @@
+package com.controller;
+
+import com.mysql.cj.Session;
+import com.pojo.Item;
+import com.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+@Controller
+@RequestMapping("/Item")
+public class ItemController {
+    @Autowired
+    private ItemService itemService;
+
+    @RequestMapping("/allItems")
+    public String list(Model model){
+        List<Item> list = itemService.selectAllItem();
+        model.addAttribute("list", list);
+        return "allItems";
+    }
+
+    @RequestMapping("/toAddItem")
+    public String toAddItem(){
+        return "AddItem";
+    }
+
+    @RequestMapping("/AddItem")
+    public String AddItem(Item item){
+        itemService.addItem(item);
+        return "redirect:/Item/allItems.action";
+    }
+
+    @RequestMapping("/del/{id}")
+    public String DelItem(@PathVariable("id") Integer id){
+        itemService.deleteItem(id);
+        return "redirect:/Item/allItems.action";
+    }
+
+    @RequestMapping("/toUpdateItem")
+    public String toUpdateItem(Integer id, Model model){
+        model.addAttribute("Item", itemService.getByid(id));
+        return "UpdateItem";
+    }
+
+    @RequestMapping("/UpdateItem")
+    public String UpdateItem(Item item){
+        itemService.updateItem(item);
+        return "redirect:/Item/allItems.action";
+    }
+}
