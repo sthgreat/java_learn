@@ -1,0 +1,13 @@
+package com.dao;
+
+import com.pojo.Item;
+
+import java.util.List;
+
+public interface ItemDao {
+    List<Item> selectAllItem();
+    Item getByid(Integer id);
+    int updateItem(Item item);
+    int addItem(Item item);
+    int deleteItem(Integer id);
+}
