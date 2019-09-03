@@ -29,5 +29,11 @@ IO优化
 #---------------------------#
 servlet
 
-一个servlet容器中包含有很多Context容器，一个Context容器负责一个Web应用，其中容器的配置属性由应用的Web.xml指定。
-真正运行Servlet的Servlet容器是Context容器。
+一个servlet容器中包含有很多Context容器，一个Context容器负责一个Web应用，其中容器的配置属性由应用的Web.xml指定；
+真正运行Servlet的Servlet容器是Context容器；
+匹配：精确匹配先于模糊匹配；
+
+#---------------------------#
+Session
+
+Cookie
