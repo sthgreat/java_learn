@@ -1,0 +1,52 @@
+1、继承Thread类,重写run方法
+
+public class MyThread extends Thread{ 
+public void run(){ 
+  for(int i = 0;i<100;i++){ 
+  System.out.println(“”) 
+    } 
+  } 
+}
+
+public class ThreadDemo(){ 
+  public static void main(String[] args){ 
+  MyThread mt1 = new MyThread(); 
+  MyThread mt2 - new MyThread(); 
+  mt1.setName(“线程1”); 
+  mt2.setName(“线程2”); 
+  mt1.start(); 
+  mt2.start(); 
+  }
+}
+
+#------------------------------#
+2、实现Runnable接口,重写run方法 
+步骤： 
+1、创建MyRunnable类实现runnable接口 
+2、重写run方法 
+3、创建MyRunnable类的对象 
+4、创建Thread类的对象，并把MyRunnable类对象作为参数传递
+
+public MyRunnable implements Runnable{ 
+public void run(){ 
+for(int i = 0;i<100;i++){ 
+System.out.println(i); 
+    } 
+  } 
+}
+
+public class MyRunnableDemo{ 
+public static void main(String[] args){ 
+  MyRunnable my = new MyRunnable(); 
+  Thread t1 = new Thread(my,”线程1”); 
+  Thread t2 = new Thread(my,”线程2”); 
+  t1.start(); 
+  t2.start(); 
+  } 
+}
+
+#-------------------------------#
+为什么用Runnable不用Thread
+首先，java只能单继承，因此如果是采用继承Thread的方法，那么在以后进行代码重构的时候可能会遇到问题，因为你无法继承别的类了。
+
+其次，如果一个类继承Thread，则不适合资源共享。但是如果实现了Runable接口的话，则很容易的实现资源共享。
