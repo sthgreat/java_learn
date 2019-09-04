@@ -26,3 +26,27 @@ Summary
 5.  规范不同
 6.  Spring 中使用 interceptor 更容易
 7.  因此 Filter 总是优先于Interceptor执行
+
+#---------------------------------------------#
+拦截器（Interceptor）和过滤器（Filter）的执行顺序
+过滤前-拦截前-Action处理-拦截后-过滤后
+#---------------------------------------------#
+Request Filters 可以:
+
+执行安全检查 perform security checks
+格式化请求头和主体 reformat request headers or bodies
+审查或者记录日志 audit or log requests
+根据请求内容授权或者限制用户访问 Authentication-Blocking requests based on user identity.
+根据请求频率限制用户访问
+Response Filters 可以:
+
+压缩响应内容,比如让下载的内容更小 Compress the response stream
+追加或者修改响应 append or alter the response stream
+创建或者整体修改响应 create a different response altogether
+根据地方不同修改响应内容 Localization-Targeting the request and response to a particular locale.
+#---------------------------------------------#
+
+ 总结
+1.过滤器：所谓过滤器顾名思义是用来过滤的，在java web中，你传入的request,response提前过滤掉一些信息，或者提前设置一些参数，然后再传入servlet或者struts的action进行业务逻辑，比如过滤掉非法url（不是login.do的地址请求，如果用户没有登陆都过滤掉）,或者在传入servlet或者struts的action前统一设置字符集，或者去除掉一些非法字符（聊天室经常用到的，一些骂人的话）。filter 流程是线性的， url传来之后，检查之后，可保持原来的流程继续向下执行，被下一个filter, servlet接收等.
+
+2.java的拦截器 主要是用在插件上，扩展件上比如 hibernate spring struts2等 有点类似面向切片的技术，在用之前先要在配置文件即xml文件里声明一段的那个东西。
