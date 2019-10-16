@@ -1,2 +1,4 @@
 1. 表别名不返回客户机，这点与列别名不一样
 2. union规则：两两连接两条select语句，每个查询必须包含相同列、表达式或聚集函数
+3. insert select语句：
+  例子：insert into table1(l1,l2,l3,l4) select l'1,l'2,l'3,l'4 from table2;
