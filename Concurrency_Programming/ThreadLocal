@@ -6,3 +6,22 @@ ThreadLocal的值只在该线程的作用范围内有效。本质是，线程的
 使用场景：保持线程自身对象和避免参数传递，按线程多实例（每个线程对应一个实例）的对象访问
 
 例子：数据库连接
+
+#---------2019.11.29-----------#
+关系：Threadlocal与Thread隶属同一个包内，Thread创建时会初始化ThreadLocalMap对象
+      ThreadLocalMap是ThreadLocal类中的静态内部类
+
+每个线程对象持有一个ThreadLocalMap，很多个ThreadLocal实例共同维护一个ThreadLocalMap
+ThreadLocalMap中含有一个Entry[] 数组，其中以ThreadLocal实例的弱引用为key，以要保存的值为value，下标通过hash算法来确定
+
+ThreadLocal的实现里，通过当前线程(currentThread)即可调用到ThreadLocalMap的set与get方法。
+
+ThreadLocal内存泄漏：
+  Entry[] 中的key是对ThreadLocal的弱引用，如果没有其他强引用引用ThreadLocal的话，下一次GC过后，ThreadLocal对象会被回收，key会等于null。
+外部读取Entry也无法获得value。而这条强引用链：Thread -> ThreadLocalMap -> Entry -> value一直存在，导致Entry不会回收，Value也不会回收，
+但Entry中的Key却已经被回收的情况，造成内存泄漏。
+
+  为什么使用弱引用：如果使用强引用，如果使用ThreadLocal的对象被回收了，因为ThreadLocalMap还持有对ThreadLocal的引用，因此ThreadLocal不会被回收，
+    导致Entry内存泄漏。使用弱引用，Entry[] 中的ThreadLocal对象不会内存泄漏，而对应的value可以在下次使用get，set，remove时会被清除。
+
+  内存泄漏的避免：使用完ThreadLocal对象后调用remove方法。
