@@ -3,6 +3,8 @@
 
 Docker:解决了运行环境和配置问题的软件容器，方便做持续集成并有助于整体发布的容器虚拟化技术。
 
+Docker client -> Docker daemon(调用REST API(over UNIX sockets or network interface));daemon管理
+
 Q1：与虚拟机的不同
   虚拟机：带环境安装的解决方案。可以在一个操作系统中运行另外的一个操作系统。笨重，虚拟出一套硬件后在此基础上运行。
     缺点：资源占用高，启动慢
