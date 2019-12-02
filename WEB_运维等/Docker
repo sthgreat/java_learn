@@ -21,3 +21,13 @@ Q2：Docker三要素：镜像，容器，仓库
   
   仓库：集中存放镜像的地方。
   
+#---------------------------#
+常用命令：
+docker version: 查看docker版本
+docker info: 详细描述
+docker --help: 帮助菜单
+
+docker images: 列出本地镜像 / -a 显示所有镜像 -q 显示镜像ID -qa显示所有镜像ID
+docker search: 在docker hub上查找某个镜像名字 /-s 点赞数筛选 -automated 只列出自动构建
+docker pull: 根据名称从远程仓库拉某个镜像/ :+版本标签
+docker rmi: 
