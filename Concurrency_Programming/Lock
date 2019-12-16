@@ -1,0 +1,11 @@
+Lock的使用方式：
+  Lock lock = new ReentrantLock();
+  lock.lock();
+  try{
+    ...
+  }finally{
+    lock.unlock();
+  }
+  
+  1.在finally块中释放锁，保证锁最后能被释放。
+  2.不将获取锁写在try中。因为在获取锁时发生异常，异常抛出的同时，锁会被无故释放。
