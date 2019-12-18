@@ -24,8 +24,11 @@ Lock的使用方式：
   
   从队列角度看await()方法，当调用该方法时，同步队列的首节点移动到Condition的等待队列中。
   
-  调用Condition的signal()方法将会唤醒等待队列中的首节点，将其移动到同步队列中。
+  调用Condition的signal()方法将会唤醒等待队列中的首节点，将其移动到同步队列中。signalAll()方法会将等待队列中的所有节点执行一次signal()方法。
   
+  从等待队列返回：当前持有lock锁的线程调用某一个Condition的signal(signalAll方法)，将该Condition中的等待队列首节点(所有节点)移动到同步队列，然后使用
+  LockSupport唤醒节点中的线程。被唤醒的线程会首先退出await方法中的循环（循环的判断条件为是否在同步队列中），进而调用同步器的acquireQueued()方法加入
+  到同步状态的竞争中。成功获取锁之后，被唤醒的线程从先前调用的await方法中返回。
   
   
   总结：
