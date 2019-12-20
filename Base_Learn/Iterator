@@ -1,0 +1,6 @@
+通过List.iterator()或者set.iterator()等获得迭代器
+
+Iterator iter = 集合对象示例.iterator()
+iter.hasnext()是否有下一个
+iter.next()下一个
+iter.remove()删除返回的元素
