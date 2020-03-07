@@ -1,5 +1,6 @@
 一个类，用来维护一个本线程的变量。此变量不能被其他线程得到。ThreadLocal是各线程将值存入该线程的map中，以ThreadLocal自身作为key，需要用时获得的是
 该线程之前存入的值。如果存入的是共享变量，并发问题还是存在的。
+无法解决共享变量的更新问题。
 
 ThreadLocal的值只在该线程的作用范围内有效。本质是，线程的ThreadLocalMap中存储了key为ThreadLocal本身和对应的值。
 
