@@ -1,0 +1,18 @@
+1. CountDownLatch
+  让一个或者多个线程去等待另外的其他线程。
+
+2. CyclicBarrier
+  可循环使用得屏障，让一组线程到达屏障（同步点）时被阻塞，直到最后一个线程到达屏障时才会放行，线程使用CyclicBarrier实例.await()表示已到达。
+  new CyclicBarrier(线程数)
+  
+  功能增强：可设定先到达的线程先行执行操作  new CyclicBarrier(线程数，Runnable实例)
+  
+区别：CountDownLatch只能使用一次，而CyclicBarrier可以使用reset（）方法重置；
+      CyclicBarrier提供更多的方法，比如isBroken()用来了解阻塞的线程是否被中断，getNumberWaiting获得阻塞的线程数量。
+      
+3. 控制并发线程数的Semaphore：
+  Semaphore(int a)定义许可数量。线程通过Semaphore实例.acquire()获取许可证，线程通过Semaphore实例.release()释放许可。
+  还有其它方法，获取剩余许可数量，获取等待线程数量等。
+  
+4.  Exchange()：
+  两个线程到达同步点（Exchange()实例.exchange()），即可交换数据。
