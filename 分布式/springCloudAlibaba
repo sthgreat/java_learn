@@ -1,0 +1,3 @@
+一、Seata 用以处理分布式事务的中间件
+
+  使用时在主方法上加@GlobalTransactional注解，在其他服务相关方法上加@Transactional注解
