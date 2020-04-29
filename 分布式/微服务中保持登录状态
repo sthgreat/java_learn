@@ -1,0 +1,15 @@
+一、@CrossOrigin
+
+采用cors的跨域请求规范
+
+如果在请求头中包含有origin，即为跨域请求，
+后端引入@CrossOrigin需标明允许哪些域名对该方法进行访问
+
+基于@CrossOrigin方法的session解决方案：
+登陆以后，前端可以拿到后端生成的UID，访问其他跨域链接时，
+前端构造cookie将UID放入其中，后端能接收到UID，以此来锁定redis中的session数据
+
+
+二、cookie设置domain：
+
+  cookie.setDomain，此后在同一父域名下的所有子域名可共享cookie，以此获得UID。
